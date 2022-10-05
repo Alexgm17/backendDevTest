@@ -15,6 +15,14 @@ server:
   port: 5000
 
 rest-integration:
-  logbookFormat: JSON
   timeout: 60000
   systems:
+    EXISTING_APIS:
+      urlBase: "http://localhost:3001"
+      endpoints:
+        SIMILAR_PRODUCTS:
+          url: "${rest-integration.systems.EXISTING_APIS.urlBase}/product/{productId}/similarids"
+          method: GET
+        PRODUCT_DETAIL:
+          url: "${rest-integration.systems.EXISTING_APIS.urlBase}/product/{productId}"
+          method: GET

@@ -1,25 +1,26 @@
 package org.alejandrogm.service.dto.output;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.alejandrogm.service.dto.ProductDetailDTO;
-
 import java.util.Set;
 
 /**
  * @author agallegomorilla
  *
  */
-
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
 public class SimilarProductsDetailsODTO  {
+    private Set<ProductDetailODTO> productDetailODTOS;
 
-    Set<ProductDetailDTO> productDetailDTOS;
+    public SimilarProductsDetailsODTO (Set<ProductDetailODTO> productDetailODTOS) {
+        this.productDetailODTOS = productDetailODTOS;
+    }
+
+    public SimilarProductsDetailsODTO () {
+    }
+
+    public Set<ProductDetailODTO> getProductDetailODTOS () {
+        return productDetailODTOS;
+    }
+
+    public void setProductDetailODTOS (Set<ProductDetailODTO> productDetailODTOS) {
+        this.productDetailODTOS = productDetailODTOS;
+    }
 }

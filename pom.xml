@@ -30,8 +30,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -80,8 +80,14 @@
       <version>1.6.11</version>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
+      <groupId>jakarta.inject</groupId>
+      <artifactId>jakarta.inject-api</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>1.5.2.Final</version>
     </dependency>
   </dependencies>
   <build>
@@ -116,14 +122,32 @@
               <packageName>com.alejandrogm.backenddevtest.openapi</packageName>
               <apiPackage>com.alejandrogm.backenddevtest.openapi.api</apiPackage>
               <modelPackage>com.alejandrogm.backenddevtest.openapi.model</modelPackage>
+              <generateSupportingFiles>false</generateSupportingFiles>
               <configOptions>
                 <sourceFolder>src/gen/java/main</sourceFolder>
                 <interfaceOnly>true</interfaceOnly>
                 <useSpringController>true</useSpringController>
+                <skipDefaultInterface>true</skipDefaultInterface>
               </configOptions>
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>1.5.2.Final</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
