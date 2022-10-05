@@ -1,4 +1,4 @@
 package org.alejandrogm.service.dto;
 
-public class SimilarProductsDTO {
+public class ProductDetailDTO {
 }

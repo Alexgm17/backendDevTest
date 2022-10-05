@@ -1,0 +1,20 @@
+spring:
+  output:
+    ansi:
+      # Activamos los colorines al arranque
+      enabled: ALWAYS
+  application:
+    name: backendDevTest
+
+springdoc:
+  swagger-ui:
+    path: '/swagger-ui.html'
+
+# Puerto del servidor
+server:
+  port: 5000
+
+rest-integration:
+  logbookFormat: JSON
+  timeout: 60000
+  systems:

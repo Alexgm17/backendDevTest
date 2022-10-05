@@ -79,6 +79,10 @@
       <artifactId>springdoc-openapi-ui</artifactId>
       <version>1.6.11</version>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -107,11 +111,15 @@
               <goal>generate</goal>
             </goals>
             <configuration>
-              <inputSpec>${project.basedir}/doc/openapi/api-definition.yml</inputSpec>
+              <inputSpec>${project.basedir}/src/main/resources/doc/openapi/api-definition.yml</inputSpec>
               <generatorName>spring</generatorName>
+              <packageName>com.alejandrogm.backenddevtest.openapi</packageName>
+              <apiPackage>com.alejandrogm.backenddevtest.openapi.api</apiPackage>
+              <modelPackage>com.alejandrogm.backenddevtest.openapi.model</modelPackage>
               <configOptions>
                 <sourceFolder>src/gen/java/main</sourceFolder>
                 <interfaceOnly>true</interfaceOnly>
+                <useSpringController>true</useSpringController>
               </configOptions>
             </configuration>
           </execution>
