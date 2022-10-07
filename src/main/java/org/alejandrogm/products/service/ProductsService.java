@@ -1,6 +1,6 @@
-package org.alejandrogm.service;
+package org.alejandrogm.products.service;
 
-import org.alejandrogm.service.dto.output.SimilarProductsDetailsODTO;
+import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
 
 /**
  * @author agallegomorilla

@@ -1,20 +1,20 @@
-package org.alejandrogm.controller.transformer;
+package org.alejandrogm.products.service.transformer;
 
 import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
-import jakarta.inject.Inject;
-import org.alejandrogm.service.dto.output.ProductDetailODTO;
-import org.alejandrogm.service.dto.output.SimilarProductsDetailsODTO;
-import org.alejandrogm.controller.transformer.mapper.ControllerMapper;
-import org.springframework.stereotype.Component;
+import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
+import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
+import org.alejandrogm.products.service.transformer.mapper.ControllerMapperImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+@Service
 public class ProductControllerTransformerImpl implements ProductsControllerTransformer{
 
-    @Inject
-    private ControllerMapper mapper;
+    @Autowired
+    ControllerMapperImpl mapper;
 
     @Override
     public Set<ProductDetail> toListSimilarProductsDetails (SimilarProductsDetailsODTO similarProductsDetailsODTO) {

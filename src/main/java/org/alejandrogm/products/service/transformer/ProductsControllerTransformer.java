@@ -1,7 +1,7 @@
-package org.alejandrogm.controller.transformer;
+package org.alejandrogm.products.service.transformer;
 
 import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
-import org.alejandrogm.service.dto.output.SimilarProductsDetailsODTO;
+import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
 
 import java.util.Set;
 

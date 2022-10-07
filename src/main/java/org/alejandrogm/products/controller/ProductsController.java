@@ -1,13 +1,15 @@
-package org.alejandrogm.controller;
+package org.alejandrogm.products.controller;
 
 import com.alejandrogm.backenddevtest.openapi.api.ProductApi;
 import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
-import jakarta.inject.Inject;
-import org.alejandrogm.service.ProductsService;
-import org.alejandrogm.service.dto.output.SimilarProductsDetailsODTO;
-import org.alejandrogm.controller.transformer.ProductsControllerTransformer;
+import org.alejandrogm.products.service.ProductsService;
+import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
+import org.alejandrogm.products.service.transformer.ProductsControllerTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -24,14 +26,15 @@ import java.util.logging.Logger;
 public class ProductsController implements ProductApi {
 
     private final Logger log = Logger.getLogger(ProductApi.class.getName());
-    @Inject
+    @Autowired
     private ProductsService productsService;
 
-    @Inject
+    @Autowired
     private ProductsControllerTransformer productsControllerTransformer;
 
     @Override
-    public ResponseEntity<Set<ProductDetail>> getProductSimilar (String productId) {
+    @GetMapping("/product/{productId}/similar")
+    public ResponseEntity<Set<ProductDetail>> getProductSimilar (@PathVariable String productId) {
         LocalDateTime tini = LocalDateTime.now();
         log.info(String.format("INIT GET /product/{productId}/similar with %s", productId));
         SimilarProductsDetailsODTO similarProductsDetailsODTO = productsService.getSimilarProductsDetails(productId);

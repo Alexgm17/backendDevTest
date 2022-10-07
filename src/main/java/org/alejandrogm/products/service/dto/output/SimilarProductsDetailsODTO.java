@@ -1,4 +1,4 @@
-package org.alejandrogm.service.dto.output;
+package org.alejandrogm.products.service.dto.output;
 
 import java.util.Set;
 

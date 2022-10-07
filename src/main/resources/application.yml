@@ -1,7 +1,6 @@
 spring:
   output:
     ansi:
-      # Activamos los colorines al arranque
       enabled: ALWAYS
   application:
     name: backendDevTest
@@ -15,7 +14,7 @@ server:
   port: 5000
 
 rest-integration:
-  timeout: 60000
+  timeout: 30000
   systems:
     EXISTING_APIS:
       urlBase: "http://localhost:3001"
