@@ -4,7 +4,7 @@ import com.alejandrogm.backenddevtest.openapi.api.ProductApi;
 import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
 import org.alejandrogm.products.service.ProductsService;
 import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
-import org.alejandrogm.products.service.transformer.ProductsControllerTransformer;
+import org.alejandrogm.products.service.transformer.ProductsTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,6 @@ import java.util.logging.Logger;
 
 /**
  * Controller for product requests
- *
- * @author agallegomorilla
  */
 @RestController
 public class ProductsController implements ProductApi {
@@ -30,7 +28,7 @@ public class ProductsController implements ProductApi {
     private ProductsService productsService;
 
     @Autowired
-    private ProductsControllerTransformer productsControllerTransformer;
+    private ProductsTransformer productsTransformer;
 
     @Override
     @GetMapping("/product/{productId}/similar")
@@ -38,7 +36,7 @@ public class ProductsController implements ProductApi {
         LocalDateTime tini = LocalDateTime.now();
         log.info(String.format("INIT GET /product/{productId}/similar with %s", productId));
         SimilarProductsDetailsODTO similarProductsDetailsODTO = productsService.getSimilarProductsDetails(productId);
-        Set<ProductDetail> listSimilarProductsDetails = productsControllerTransformer.toListSimilarProductsDetails(similarProductsDetailsODTO);
+        Set<ProductDetail> listSimilarProductsDetails = productsTransformer.toListSimilarProductsDetails(similarProductsDetailsODTO);
         log.info(String.format("END GET /product/{productId}/similar with %s. Response time: %d", productId, (ChronoUnit.MILLIS.between(tini, LocalDateTime.now()))));
         return new ResponseEntity<>(listSimilarProductsDetails, HttpStatus.OK);
     }

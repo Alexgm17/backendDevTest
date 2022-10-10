@@ -14,7 +14,7 @@ server:
   port: 5000
 
 rest-integration:
-  timeout: 30000
+  timeout: 10000
   systems:
     EXISTING_APIS:
       urlBase: "http://localhost:3001"

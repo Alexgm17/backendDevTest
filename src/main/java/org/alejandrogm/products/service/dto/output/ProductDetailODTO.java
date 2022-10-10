@@ -1,11 +1,19 @@
 package org.alejandrogm.products.service.dto.output;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ProductDetailODTO {
+public class ProductDetailODTO implements Serializable {
+
+    @JsonProperty("id")
     private String id;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("price")
     private BigDecimal price;
+    @JsonProperty("availability")
     private Boolean availability;
 
     public ProductDetailODTO (String id, String name, BigDecimal price, Boolean availability) {

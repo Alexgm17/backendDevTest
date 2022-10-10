@@ -5,7 +5,7 @@ import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
 
 import java.util.Set;
 
-public interface ProductsControllerTransformer {
+public interface ProductsTransformer {
 
     /**
      * @param similarProductsDetailsODTO

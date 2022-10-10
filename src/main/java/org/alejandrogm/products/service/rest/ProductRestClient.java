@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
+import org.alejandrogm.products.service.error.CustomApiException;
+import org.alejandrogm.products.service.error.ProductServiceErrorCodeType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 
@@ -21,7 +23,7 @@ public class ProductRestClient {
 
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
-            .connectTimeout(Duration.ofSeconds(30))
+            .connectTimeout(Duration.ofSeconds(10))
             .build();
 
     private static final Logger log = Logger.getLogger(ProductApi.class.getName());
@@ -29,7 +31,7 @@ public class ProductRestClient {
     @Inject
     private Environment env;
 
-    @Value("${rest-integration.systems.EXISTING_APIS.endpoints.SIMILAR_PRODUCTS.url}")
+    @Value("${server.port}")
     private static String URL_GETSIMILARPRODUCTS;
 
     public static List<String> createRequestSimilarProductsIds (String productId) {
@@ -39,17 +41,25 @@ public class ProductRestClient {
                 .setHeader("Content-Type", "application/json")
                 .build();
 
-        log.info("Request createRequestSimilarProductsIds: "+ request);
-
         HttpResponse<String> response = null;
         try {
+            log.info(String.format("Calling external service for obtain similar products with id: %s", productId));
             response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             ObjectMapper mapper = new ObjectMapper();
-            List<String> similarProductsIds = mapper.readValue(response.body(), new TypeReference<List<String>>() {});
-            return similarProductsIds;
+
+            if (ProductServiceErrorCodeType.PRODUCT_OK.getCode()==response.statusCode()) {
+                List<String> similarProductsIds = mapper.readValue(response.body(), new TypeReference<List<String>>() {});
+                return similarProductsIds;
+            } else if (ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getCode()==response.statusCode()) {
+                throw new CustomApiException(ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getDescription());
+            }
+
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
+        } catch (RuntimeException r) {
+            throw new CustomApiException(ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getDescription());
         }
+        return null;
     }
 
     public static ProductDetailODTO createRequestGetProductDetails (String productId) {
@@ -59,16 +69,22 @@ public class ProductRestClient {
                 .setHeader("Content-Type", "application/json")
                 .build();
 
-        log.info("Request createRequestGetProductDetails: "+ request);
-
         HttpResponse<String> response = null;
         try {
+            log.info(String.format("Calling external service for obtain similar products description with id: %s", productId));
             response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             ObjectMapper mapper = new ObjectMapper();
-            ProductDetailODTO productDetailODTO = mapper.readValue(response.body(), new TypeReference<ProductDetailODTO>() {});
-            return productDetailODTO;
+            if (ProductServiceErrorCodeType.PRODUCT_OK.getCode()==response.statusCode()) {
+                ProductDetailODTO productDetailODTO = mapper.readValue(response.body(), new TypeReference<ProductDetailODTO>() {});
+                return productDetailODTO;
+            } else if (ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getCode()==response.statusCode()) {
+                return null;
+            } else {
+                return null;
+            }
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            log.info(String.format("Error calling external service for obtain product details with id: %s", productId));
+            return null;
         }
     }
 }

@@ -1,12 +1,9 @@
 package org.alejandrogm.products.service.dto.output;
 
+import java.io.Serializable;
 import java.util.Set;
 
-/**
- * @author agallegomorilla
- *
- */
-public class SimilarProductsDetailsODTO  {
+public class SimilarProductsDetailsODTO implements Serializable {
     private Set<ProductDetailODTO> productDetailODTOS;
 
     public SimilarProductsDetailsODTO (Set<ProductDetailODTO> productDetailODTOS) {

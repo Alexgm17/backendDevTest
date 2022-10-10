@@ -2,16 +2,21 @@ package org.alejandrogm.products.service.transformer.mapper;
 
 import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
 import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
-import org.mapstruct.Mapper;
 
-@Mapper
-public interface ControllerMapper {
+public class ControllerMapper {
 
-    /**
-     * toProductDetail
-     *
-     * @param productDetailODTO
-     * @return
-     */
-    ProductDetail toProductDetail(ProductDetailODTO productDetailODTO);
+    public static ProductDetail toProductDetail(ProductDetailODTO productDetailODTO) {
+        if ( productDetailODTO == null ) {
+            return null;
+        }
+
+        ProductDetail productDetail = new ProductDetail();
+
+        productDetail.setId( productDetailODTO.getId() );
+        productDetail.setName( productDetailODTO.getName() );
+        productDetail.setPrice( productDetailODTO.getPrice() );
+        productDetail.setAvailability( productDetailODTO.getAvailability() );
+
+        return productDetail;
+    }
 }
