@@ -48,15 +48,17 @@ public class ProductRestClient {
             ObjectMapper mapper = new ObjectMapper();
 
             if (ProductServiceErrorCodeType.PRODUCT_OK.getCode()==response.statusCode()) {
-                List<String> similarProductsIds = mapper.readValue(response.body(), new TypeReference<List<String>>() {});
+                List<String> similarProductsIds = mapper.readValue(response.body(), new TypeReference<List<>>() {});
                 return similarProductsIds;
             } else if (ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getCode()==response.statusCode()) {
+                log.info(String.format("Error calling external service for obtain similar products with id: %s", productId));
                 throw new CustomApiException(ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getDescription());
             }
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         } catch (RuntimeException r) {
+            log.info(String.format("Error calling external service for obtain similar products with id: %s", productId));
             throw new CustomApiException(ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getDescription());
         }
         return null;

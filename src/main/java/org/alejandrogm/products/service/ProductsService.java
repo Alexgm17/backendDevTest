@@ -2,10 +2,6 @@ package org.alejandrogm.products.service;
 
 import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
 
-/**
- * @author agallegomorilla
- *
- */
 public interface ProductsService {
 
     /**
