@@ -1,25 +1,24 @@
-package org.alejandrogm.products;
+package org.alejandrogm.products.controller;
 
 import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
-import org.alejandrogm.products.controller.ProductsController;
 import org.alejandrogm.products.service.ProductsService;
 import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
 import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
 import org.alejandrogm.products.service.error.CustomApiException;
 import org.alejandrogm.products.service.transformer.ProductsTransformer;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -32,13 +31,13 @@ public class ProductsControllerTest {
     private ProductsTransformer productsTransformer;
 
     @Mock
-    private Set<ProductDetail> listProducts;
+    private static Set<ProductDetail> listProducts;
 
     @InjectMocks
     private ProductsController productsController;
 
-    @BeforeTestClass
-    public void prepareTransformerList() {
+    @BeforeAll
+    public static void prepareTransformerList () {
         var productDetail1 = new ProductDetail();
         var productDetail2 = new ProductDetail();
         var productDetail3 = new ProductDetail();
@@ -58,7 +57,7 @@ public class ProductsControllerTest {
     }
 
     @Test
-    public void testGetProductSimilar(){
+    public void testGetProductSimilarOK () {
         var product1 = new ProductDetailODTO("4", "Boots", new BigDecimal(39.99), true);
         var product2 = new ProductDetailODTO("3", "Blazer", new BigDecimal(29.99), false);
         var product3 = new ProductDetailODTO("2", "Dress", new BigDecimal(19.99), false);
@@ -73,9 +72,5 @@ public class ProductsControllerTest {
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
     }
-
-    @Test
-    public void testErrorProductNotFound() {
-        Mockito.when(productsService.getSimilarProductsDetails("6")).thenThrow(CustomApiException.class);
-    }
 }
+

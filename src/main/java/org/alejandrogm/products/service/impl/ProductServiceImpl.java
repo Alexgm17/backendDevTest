@@ -16,9 +16,6 @@ import java.util.logging.Logger;
 @Service
 public class ProductServiceImpl implements ProductsService {
 
-    @Autowired
-    private ProductsTransformer productsTransformer;
-
     private final Logger log = Logger.getLogger(ProductsService.class.getName());
     @Override
     public SimilarProductsDetailsODTO getSimilarProductsDetails (String productId) {

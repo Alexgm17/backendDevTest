@@ -3,12 +3,9 @@ package org.alejandrogm.products.service.rest;
 import com.alejandrogm.backenddevtest.openapi.api.ProductApi;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.inject.Inject;
 import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
 import org.alejandrogm.products.service.error.CustomApiException;
 import org.alejandrogm.products.service.error.ProductServiceErrorCodeType;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 
 import java.io.IOException;
 import java.net.URI;
@@ -28,16 +25,13 @@ public class ProductRestClient {
 
     private static final Logger log = Logger.getLogger(ProductApi.class.getName());
 
-    @Inject
-    private Environment env;
-
-    @Value("${server.port}")
-    private static String URL_GETSIMILARPRODUCTS;
+    private static final String URL_PRODUCTS = "http://localhost:3001/product/";
+    private static final String URL_SIMILAR_PRODUCTS = "/similarids";
 
     public static List<String> createRequestSimilarProductsIds (String productId) {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:3001/product/"+productId+"/similarids"))
+                .uri(URI.create(URL_PRODUCTS+productId+URL_SIMILAR_PRODUCTS))
                 .setHeader("Content-Type", "application/json")
                 .build();
 
@@ -48,10 +42,9 @@ public class ProductRestClient {
             ObjectMapper mapper = new ObjectMapper();
 
             if (ProductServiceErrorCodeType.PRODUCT_OK.getCode()==response.statusCode()) {
-                List<String> similarProductsIds = mapper.readValue(response.body(), new TypeReference<List<>>() {});
+                List<String> similarProductsIds = mapper.readValue(response.body(), new TypeReference<List<String>>() {});
                 return similarProductsIds;
             } else if (ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getCode()==response.statusCode()) {
-                log.info(String.format("Error calling external service for obtain similar products with id: %s", productId));
                 throw new CustomApiException(ProductServiceErrorCodeType.PRODUCT_NOT_FOUND.getDescription());
             }
 
@@ -67,7 +60,7 @@ public class ProductRestClient {
     public static ProductDetailODTO createRequestGetProductDetails (String productId) {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:3001/product/"+productId))
+                .uri(URI.create(URL_PRODUCTS+productId))
                 .setHeader("Content-Type", "application/json")
                 .build();
 
