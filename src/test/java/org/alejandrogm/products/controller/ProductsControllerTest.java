@@ -4,7 +4,6 @@ import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
 import org.alejandrogm.products.service.ProductsService;
 import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
 import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
-import org.alejandrogm.products.service.error.CustomApiException;
 import org.alejandrogm.products.service.transformer.ProductsTransformer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest

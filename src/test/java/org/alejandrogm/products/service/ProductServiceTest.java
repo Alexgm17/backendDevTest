@@ -1,22 +1,17 @@
 package org.alejandrogm.products.service;
 
-import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
 import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
 import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class ProductServiceTest {

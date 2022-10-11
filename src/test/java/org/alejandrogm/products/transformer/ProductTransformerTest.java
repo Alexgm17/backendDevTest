@@ -4,12 +4,10 @@ import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
 import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
 import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
 import org.alejandrogm.products.service.transformer.ProductTransformerImpl;
-import org.alejandrogm.products.service.transformer.mapper.ControllerMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
