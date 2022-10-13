@@ -22,7 +22,7 @@ Once the list of ids of products similar to ours is obtained, a request is made 
 
 Once this information is obtained, the new service developed will return a list of the details of products similar to the id of the product that it receives by request.
 
-![](D:\Projects\backendDevTest\backendDevTest\src\main\resources\images\diagram.jpg)
+![](https://github.com/Alexgm17/backendDevTest/blob/main/src/main/resources/images/diagram.jpg)
 
 ## What structure has been applied?
 
@@ -47,10 +47,10 @@ After the execution of the tests, here you can see the results of the different 
 docker-compose run --rm k6 run scripts/test.js
 ```
 
-![](D:\Projects\backendDevTest\backendDevTest\src\main\resources\images\test-execution.PNG)
+![](https://github.com/Alexgm17/backendDevTest/blob/main/src/main/resources/images/test-execution.PNG)
 
 - Grafana tests results
 
 http://localhost:3000/d/Le2Ku9NMk/k6-performance-test 
 
-![](D:\Projects\backendDevTest\backendDevTest\src\main\resources\images\grafana-test-result.PNG)
+![](https://github.com/Alexgm17/backendDevTest/blob/main/src/main/resources/images/grafana-test-result.PNG)
