@@ -4,11 +4,13 @@ import com.alejandrogm.backenddevtest.openapi.model.ProductDetail;
 import org.alejandrogm.products.service.ProductsService;
 import org.alejandrogm.products.service.dto.output.ProductDetailODTO;
 import org.alejandrogm.products.service.dto.output.SimilarProductsDetailsODTO;
+import org.alejandrogm.products.service.error.CustomApiException;
 import org.alejandrogm.products.service.transformer.ProductsTransformer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,12 +65,33 @@ public class ProductsControllerTest {
         Set<ProductDetailODTO> products = Set.of(product1, product2, product3);
         SimilarProductsDetailsODTO similarProductsDetailsODTO = new SimilarProductsDetailsODTO(products);
 
-        when(productsService.getSimilarProductsDetails("1")).thenReturn(similarProductsDetailsODTO);
-        when(productsTransformer.toListSimilarProductsDetails(similarProductsDetailsODTO)).thenReturn(listProducts);
+        when(productsService.getSimilarProductsDetails(Mockito.anyString())).thenReturn(similarProductsDetailsODTO);
+        when(productsTransformer.toListSimilarProductsDetails(Mockito.any(SimilarProductsDetailsODTO.class))).thenReturn(listProducts);
 
         ResponseEntity<Set<ProductDetail>> actual = productsController.getProductSimilar("1");
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
+    }
+
+    @Test
+    public void testGetProductSimilarKO () {
+        var product1 = new ProductDetailODTO("4", "Boots", new BigDecimal(39.99), true);
+        var product2 = new ProductDetailODTO("3", "Blazer", new BigDecimal(29.99), false);
+        var product3 = new ProductDetailODTO("2", "Dress", new BigDecimal(19.99), false);
+
+        CustomApiException customApiException = new CustomApiException("Product Not found.");
+        Set<ProductDetailODTO> products = Set.of(product1, product2, product3);
+        SimilarProductsDetailsODTO similarProductsDetailsODTO = new SimilarProductsDetailsODTO(products);
+
+        when(productsService.getSimilarProductsDetails(Mockito.anyString())).thenThrow(customApiException);
+
+        try {
+            productsController.getProductSimilar("1");
+        } catch (Exception exception) {
+            if (exception instanceof CustomApiException) {
+                assertEquals(exception.getMessage(), "Product Not found.");
+            }
+        }
     }
 }
 
